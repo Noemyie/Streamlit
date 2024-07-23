@@ -1,0 +1,86 @@
+import pickle
+import streamlit as st
+import numpy as np
+
+# Load model
+#model_diabetes = pickle.load(open('model_diabetes.sav', 'rb'))
+
+# Web Title
+st.set_page_config(
+    page_title='Prediction de la maladie rénale chronique',
+    page_icon='🧪',  # You can choose any suitable emoji or icon
+    layout='wide'
+)
+
+# Apply custom CSS styling
+st.markdown(
+    """
+    <style>
+    [data-testid="stAppViewContainer"] > .main {
+        background-color: #8FACA2; /* Matching the background color from home page */
+    }
+    [data-testid="stHeader"] {
+        background: rgba(0,0,0,0);
+    }
+    .stButton>button {
+        background-color: #8FACA2;
+        color: white;
+        display: block;
+        margin: 0 auto;
+    }
+    .stSuccess {
+        color: #4CAF50; /* Green color for success message */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Web Title
+st.title('Prediction de la maladie rénale chronique')
+
+# Split Columns
+col1, col2 = st.columns(2)
+
+with col1:
+    Age = st.number_input('Enter your age')
+
+with col2:
+    bp = st.number_input('Enter the blood pressure value')
+
+with col1:
+    sod = st.number_input('Enter the Sodium value')
+
+with col2:
+    pot = st.number_input('Enter the Potassium value')
+
+with col1:
+    hemo = st.number_input('Enter the hemoglobine value')
+
+with col2:
+    al = st.number_input('Enter the albumin value')
+
+with col1:
+    sg = st.number_input('Enter the sg value')
+
+with col2:
+    su = st.number_input('Enter the su value')
+
+with col1:
+    sc = st.number_input('Enter the sc value')
+
+with col2:
+    Classification = st.number_input('Enter your classification value')
+
+# Prediction
+renale_diag = ''
+
+if st.button('Diabetes Prediction Test'):
+    renale_prediction = model_renale.predict([[Age, bp, sod, pot, hemo, al, sg, su, sc, Classification]])
+
+    if renale_prediction[0] == 1:
+        renale_diag = 'Le patient est atteint de maladie chronique rénale'
+    else:
+        renale_diag = 'Le patient est sain'
+
+st.success(renale_diag)
